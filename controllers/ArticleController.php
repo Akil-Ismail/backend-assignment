@@ -31,7 +31,20 @@ class ArticleController
 
     public function deleteAllArticles()
     {
-        die("Deleting...");
+        global $mysqli;
+        try {
+            if (!isset($_GET["id"])) {
+                $result = Article::deleteAll($mysqli);
+                echo ResponseService::success_response($result);
+                return;
+            }
+            $id = $_GET["id"];
+            $result = Article::delete($mysqli, $id);
+            echo ResponseService::success_response($result);
+            return;
+        } catch (exception) {
+            echo ResponseService::fail_response();
+        }
     }
 }
 
