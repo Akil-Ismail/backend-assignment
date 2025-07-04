@@ -1,4 +1,4 @@
-<!-- , add a new article, update a specific article -->
+<!-- , update a specific article -->
 <?php
 
 //Routing starts here (Mapping between the request and the controller & method names)
@@ -9,6 +9,7 @@ $apis = [
     '/article'         => ['controller' => 'ArticleController', 'method' => 'getArticle'],
     '/delete_articles'         => ['controller' => 'ArticleController', 'method' => 'deleteAllArticles'],
     '/delete_article'         => ['controller' => 'ArticleController', 'method' => 'deleteArticle'],
+    '/add_article'         => ['controller' => 'ArticleController', 'method' => 'addArticle'],
 
     '/login'         => ['controller' => 'AuthController', 'method' => 'login'],
     '/register'         => ['controller' => 'AuthController', 'method' => 'register'],

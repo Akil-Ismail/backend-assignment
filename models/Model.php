@@ -67,15 +67,24 @@ abstract class Model
         return $data ? new static($data) : null;
     }
 
-    public function add(mysqli $mysqli, $values)
+    public static function add(mysqli $mysqli, array $data)
     {
-        $updated = implode(", ", $values);
+        $feilds = [];
+        $values = [];
+        foreach ($data as $key => $value) {
+            $feilds[] = "$key = ?";
+            $values[] = [$value];
+        }
+        $updated = implode(",", $feilds);
+
         $sql = sprintf(
             "INSERT INTO %s VALUES %s",
             static::$table,
             $updated
         );
         $query = $mysqli->prepare($sql);
+        $types = str_repeat("s", count($values));
+        $query->bind_param($types, $values);
         $query->execute();
 
         $data = $query->get_result()->fetch_assoc();

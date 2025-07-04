@@ -60,6 +60,18 @@ class ArticleController
             echo ResponseService::fail_response();
         }
     }
+
+    public function addArticle()
+    {
+        global $mysqli;
+
+        try {
+            $result = Article::add($mysqli, $_POST);
+            echo ResponseService::success_response($result);
+        } catch (Exception) {
+            echo ResponseService::fail_response();
+        }
+    }
 }
 
 //To-Do:
