@@ -13,13 +13,20 @@ class ArticleController
         global $mysqli;
 
         try {
-            if (!isset($_GET["id"])) {
-                $articles = Article::all($mysqli);
-                $articles_array = ArticleService::articlesToArray($articles);
-                echo ResponseService::success_response($articles_array);
-                return;
-            }
+            $articles = Article::all($mysqli);
+            $articles_array = ArticleService::articlesToArray($articles);
+            echo ResponseService::success_response($articles_array);
+            return;
+        } catch (Exception) {
+            echo ResponseService::fail_response();
+        }
+    }
 
+    public function getArticle()
+    {
+        global $mysqli;
+
+        try {
             $id = $_GET["id"];
             $article = Article::find($mysqli, $id)->toArray();
             echo ResponseService::success_response($article);
@@ -33,11 +40,18 @@ class ArticleController
     {
         global $mysqli;
         try {
-            if (!isset($_GET["id"])) {
-                $result = Article::deleteAll($mysqli);
-                echo ResponseService::success_response($result);
-                return;
-            }
+            $result = Article::deleteAll($mysqli);
+            echo ResponseService::success_response($result);
+            return;
+        } catch (exception) {
+            echo ResponseService::fail_response();
+        }
+    }
+
+    public function deleteArticle()
+    {
+        global $mysqli;
+        try {
             $id = $_GET["id"];
             $result = Article::delete($mysqli, $id);
             echo ResponseService::success_response($result);
