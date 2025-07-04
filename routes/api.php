@@ -10,6 +10,7 @@ $apis = [
     '/delete_articles'         => ['controller' => 'ArticleController', 'method' => 'deleteAllArticles'],
     '/delete_article'         => ['controller' => 'ArticleController', 'method' => 'deleteArticle'],
     '/add_article'         => ['controller' => 'ArticleController', 'method' => 'addArticle'],
+    '/update_article'         => ['controller' => 'ArticleController', 'method' => 'updateArticle'],
 
     '/login'         => ['controller' => 'AuthController', 'method' => 'login'],
     '/register'         => ['controller' => 'AuthController', 'method' => 'register'],

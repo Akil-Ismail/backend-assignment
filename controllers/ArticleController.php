@@ -72,6 +72,19 @@ class ArticleController
             echo ResponseService::fail_response();
         }
     }
+    public function updateArticle()
+    {
+        global $mysqli;
+
+        try {
+            $id = $_POST['id'];
+            $article = new Article([]);
+            $result = $article->update($mysqli, $_POST, $id);
+            echo ResponseService::success_response($result);
+        } catch (exception) {
+            echo ResponseService::fail_response();
+        }
+    }
 }
 
 //To-Do:
