@@ -66,6 +66,46 @@ abstract class Model
         $data = $query->get_result()->fetch_assoc();
         return $data ? new static($data) : null;
     }
+
+    public function add(mysqli $mysqli, $values)
+    {
+        $updated = implode(", ", $values);
+        $sql = sprintf(
+            "INSERT INTO %s VALUES %s",
+            static::$table,
+            $updated
+        );
+        $query = $mysqli->prepare($sql);
+        $query->execute();
+
+        $data = $query->get_result()->fetch_assoc();
+        return $data ? new static($data) : null;
+    }
+
+    public function update(mysqli $mysqli, array $data, string $id)
+    {
+        $feilds = [];
+        $values = [];
+        foreach ($data as $key => $value) {
+            $feilds[] = "$key = ?";
+            $values[] = [$value];
+        }
+        $updated = implode(",", $feilds);
+        $sql = sprintf(
+            "UPDATE %s SET %s WHERE %s = ?",
+            static::$table,
+            $updated,
+            static::$primary_key
+        );
+        $query = $mysqli->prepare($sql);
+        $types = str_repeat("s", count($values));
+        $query->bind_param($types, $values);
+        $query->bind_param("i", $id);
+        $query->execute();
+
+        $data = $query->get_result()->fetch_assoc();
+        return $data ? new static($data) : null;
+    }
     //you have to continue with the same mindset
     //Find a solution for sending the $mysqli everytime... 
     //Implement the following: 
