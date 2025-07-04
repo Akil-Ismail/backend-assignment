@@ -1,4 +1,10 @@
-<?php 
+<?php
+require(__DIR__ . "/routes/api.php");
+global $apis;
+echo "<script>console.log(" . json_encode($apis) . ");</script>";
+//this is for insuring that the apis is visible in the index file
+
+
 
 // This block is used to extract the route name from the URL
 //----------------------------------------------------------
@@ -22,22 +28,6 @@ if ($request == '') {
 
 // This block is used to extract the route name from the URL
 //----------------------------------------------------------
-
-
-//Routing starts here (Mapping between the request and the controller & method names)
-//It's an key-value array where the value is an key-value array
-//----------------------------------------------------------
-$apis = [
-    '/articles'         => ['controller' => 'ArticleController', 'method' => 'getAllArticles'],
-    '/delete_articles'         => ['controller' => 'ArticleController', 'method' => 'deleteAllArticles'],
-
-    '/login'         => ['controller' => 'AuthController', 'method' => 'login'],
-    '/register'         => ['controller' => 'AuthController', 'method' => 'register'],
-
-];
-
-//----------------------------------------------------------
-
 
 //Routing Logic here 
 //This is a dynamic logic, that works on any array... 
