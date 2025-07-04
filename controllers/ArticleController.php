@@ -1,29 +1,36 @@
-<?php 
+<?php
 
 require(__DIR__ . "/../models/Article.php");
 require(__DIR__ . "/../connection/connection.php");
 require(__DIR__ . "/../services/ArticleService.php");
 require(__DIR__ . "/../services/ResponseService.php");
 
-class ArticleController{
-    
-    public function getAllArticles(){
+class ArticleController
+{
+
+    public function getAllArticles()
+    {
         global $mysqli;
 
-        if(!isset($_GET["id"])){
-            $articles = Article::all($mysqli);
-            $articles_array = ArticleService::articlesToArray($articles); 
-            echo ResponseService::success_response($articles_array);
-            return;
-        }
+        try {
+            if (!isset($_GET["id"])) {
+                $articles = Article::all($mysqli);
+                $articles_array = ArticleService::articlesToArray($articles);
+                echo ResponseService::success_response($articles_array);
+                return;
+            }
 
-        $id = $_GET["id"];
-        $article = Article::find($mysqli, $id)->toArray();
-        echo ResponseService::success_response($article);
-        return;
+            $id = $_GET["id"];
+            $article = Article::find($mysqli, $id)->toArray();
+            echo ResponseService::success_response($article);
+            return;
+        } catch (Exception) {
+            echo ResponseService::fail_response();
+        }
     }
 
-    public function deleteAllArticles(){
+    public function deleteAllArticles()
+    {
         die("Deleting...");
     }
 }
