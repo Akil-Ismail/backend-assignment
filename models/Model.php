@@ -54,6 +54,18 @@ abstract class Model
         return $data ? new static($data) : null;
     }
 
+    public static function deleteAll(mysqli $mysqli)
+    {
+        $sql = sprintf(
+            "DELETE * FROM TABLE %s",
+            static::$table
+        );
+        $query = $mysqli->prepare($sql);
+        $query->execute();
+
+        $data = $query->get_result()->fetch_assoc();
+        return $data ? new static($data) : null;
+    }
     //you have to continue with the same mindset
     //Find a solution for sending the $mysqli everytime... 
     //Implement the following: 
